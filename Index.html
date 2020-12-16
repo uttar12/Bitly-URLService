@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Service Provider</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<!-- <link href="/Content/site.css" rel="stylesheet"/> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="C:/UttarKumar/Bitly-URLService/URLProviderController.js"></script>
+</head>
+<body>
+    <div class="container body-content">
+	<h2>URL Service Provider Actions</h2>
+<p><strong>Note:</strong> <span style="color:red;font-family: cursive;font-weight: bold;">Please generate GroupId first to do any action<span></p>
+<form name="URLShortening" id="URLShortening">
+    <div class="form-horizontal" style="height:500px;">
+        <br />
+        <div id="divMessage" class="error">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <span id="spnMessage" style="overflow-wrap: break-word;">This is an alert box.</span>
+        </div>
+        <b><a href="javascript:void(0);" id="lnkClear">Clear</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" id="lnkClearGuid" style="float: right;">Clear GroupId</a></b>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="btn-group" role="group">
+                    <input type="button" value="Get GroupId" id="btnGetGUID" class="btn btn-success active" />&nbsp;
+                    <input type="button" value="Get Access Token" id="btnGetAccessToken" class="btn btn-default" style="display:none" />
+                    <input type="button" value="Retrieve Bitlinks by Group" id="btnGetBitlinksbyGroup" class="btn btn-info" />&nbsp;&nbsp;&nbsp;
+                    <label class="btn btn-default btn-checkbox">
+                        <span class="glyphicon glyphicon-unchecked" data-icon-on="glyphicon glyphicon-check" data-icon-off="glyphicon glyphicon-unchecked"></span>
+                        <input name="radio" type="radio" value="GetURLClicks" style="display: none" autocomplete="false" /> Get URLClicks Count
+                    </label>
+                    <label class="btn btn-default btn-checkbox">
+                        <span class="glyphicon glyphicon-unchecked" data-icon-on="glyphicon glyphicon-check" data-icon-off="glyphicon glyphicon-unchecked"></span>
+                        <input name="radio" type="radio" value="ExpandUrl" style="display: none" autocomplete="false" /> Get LongUrl from ShortUrl
+                    </label>
+                    <label class="btn btn-default btn-checkbox">
+                        <span class="glyphicon glyphicon-unchecked" data-icon-on="glyphicon glyphicon-check" data-icon-off="glyphicon glyphicon-unchecked"></span>
+                        <input name="radio" type="radio" value="ShorternUrl" style="display: none" autocomplete="false" /> Generate ShortUrl from LongUrl
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div id="GetUserInfo" class="cssHidden divActions">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Enter ShorternUrl">Enter ShorternUrl</label>
+                    <div class="col-md-8">
+                        <input class="form-control text-box single-line" id="txtUserShorternUrl" name="txtUserShorternUrl" type="url" placeholder="Enter Shortern URL.." value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Clicks Count" id="btnGetUser" class="btn btn-primary" />&nbsp;
+                        <input type="button" value="Clear" id="btnUserClear" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div id="CheckIfExists" class="cssHidden divActions">
+                <div class="form-group">
+                    <label class="control-label col-md-2" id="lblLongUrl" for="LongUrl To Shortern">LongUrl To Shortern</label>
+                    <div class="col-md-8">
+                        <input class="form-control text-box single-line" id="txtCheckIfExist" name="txtCheckIfExist" type="url" placeholder="Enter Long URL.." value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Check Url Exist" id="btnCheckIfExist" class="btn btn-primary" />&nbsp;
+                        <input type="button" value="Clear" id="btnCheckIfExistClear" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div id="GetURLClicks" class="cssHidden divActions">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Enter ShorternUrl">Enter ShorternUrl</label>
+                    <div class="col-md-8">
+                        <input class="form-control text-box single-line" id="txtClicksShorternUrl" name="txtClicksShorternUrl" type="url" placeholder="Enter Shortern URL.." value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Clicks Count" id="btnClicks" class="btn btn-primary" />&nbsp;
+                        <input type="button" value="Clear" id="btnClicksClear" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div id="ExpandUrl" class="cssHidden divActions">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Shortern To LongUrl">Shortern To LongUrl</label>
+                    <div class="col-md-8">
+                        <input class="form-control text-box single-line" id="txtExpandURL" name="txtExpandURL" type="url" placeholder="Enter Shortern URL.." value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Expand URL" id="btnExpandSubmit" class="btn btn-primary" />&nbsp;
+                        <input type="button" value="Clear" id="btnExpandClear" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+            <div id="ShorternUrl" class="cssHidden divActions">
+                <div class="form-group">
+                    <label class="control-label col-md-2" id="lblLongUrl" for="LongUrl To Shortern">LongUrl To Shortern</label>
+                    <div class="col-md-8">
+                        <input class="form-control text-box single-line" id="txtShorternURL" name="txtShorternURL" type="url" placeholder="Enter Long URL.." value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Shortern URL" id="btnShorternSubmit" class="btn btn-primary" />&nbsp;
+                        <input type="button" value="Clear" id="btnShorternClear" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="linkGroups divActions">
+            <table border="1" cellpadding="1" cellspacing="1" width="60%">
+                <thead>
+                    <tr>
+                        <th width="17%">Id</th>
+                        <th width="17%">Link</th>
+                        <th width="15%">Created On</th>
+                        <th width="30%">Long Url</th>
+                    </tr>
+                </thead>
+                <tbody id='maintable'></tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<style type="text/css">
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    a:link {
+        color: red;
+    }
+
+    /* visited link */
+    a:visited {
+        color: green;
+    }
+
+    /* mouse over link */
+    a:hover {
+        color: hotpink;
+    }
+
+    /* selected link */
+    a:active {
+        color: blue;
+    }
+    
+
+    .cssHidden {
+        display: none;
+    }
+
+    input, select, textarea {
+        max-width: 700px !important;
+    }
+
+    /* The alert message box */
+    .error {
+        padding: 20px;
+        background-color: #f44336; /* Red background-color: green; */
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .success {
+        padding: 20px;
+        background-color: green; /* Red background-color: green; */
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+</style>  
+</body>
+</html>
